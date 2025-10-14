@@ -8,6 +8,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+// import { createClient } from '@/utils/supabase/server';
+
+import { createClient } from "@supabase/supabase-js";
 import { useSession } from "next-auth/react"
 import { redirect } from "next/navigation";
 
@@ -16,74 +19,95 @@ type Recipe = {
   title: string;
   image: string;
   description: string;
-  dateAdded: string;
+  created: string;
   annotations: { id: number; text: string; author: string }[];
 };
 
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!);
+
 export default function Cookbook() {
-  const [recipes, setRecipes] = useState<Recipe[]>([
-    {
-      id: 1,
-      title: "Creamy Garlic Pasta",
-      image: "/content/template.jpg",
-      description: "A 15-minute creamy pasta with garlic, parsley and parmesan.",
-      dateAdded: "2025-10-10",
-      annotations: []
-    },
-    {
-      id: 2,
-      title: "Creamy Garlic Pasta",
-      image: "/content/template.jpg",
-      description: "A 15-minute creamy pasta with garlic, parsley and parmesan.",
-      dateAdded: "2025-10-10",
-      annotations: []
-    },
-    {
-      id: 3,
-      title: "Creamy Garlic Pasta",
-      image: "https://files.mob-cdn.co.uk/recipes/2025/7/Smoky-Prawn-Paprika-Fiduea%CC%81.jpg",
-      description: "A 15-minute creamy pasta with garlic, parsley and parmesan.",
-      dateAdded: "2025-10-10",
-      annotations: []
-    },
-    {
-      id: 4,
-      title: "One-Pan Chicken & Rice",
-      image: "/content/template.jpg",
-      description: "Juicy chicken thighs baked with saffron rice and lemon.",
-      dateAdded: "2025-09-28",
-      annotations: [],
-    },
-  ]);
-
-
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [mounted, setMounted] = useState(false);
+  
+  // ([
+  //   {
+  //     id: 1,
+  //     title: "Creamy Garlic Pasta",
+  //     image: "/content/template.jpg",
+  //     description: "A 15-minute creamy pasta with garlic, parsley and parmesan.",
+  //     dateAdded: "2025-10-10",
+  //     annotations: []
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Creamy Garlic Pasta",
+  //     image: "/content/template.jpg",
+  //     description: "A 15-minute creamy pasta with garlic, parsley and parmesan.",
+  //     dateAdded: "2025-10-10",
+  //     annotations: []
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Creamy Garlic Pasta",
+  //     image: "https://files.mob-cdn.co.uk/recipes/2025/7/Smoky-Prawn-Paprika-Fiduea%CC%81.jpg",
+  //     description: "A 15-minute creamy pasta with garlic, parsley and parmesan.",
+  //     dateAdded: "2025-10-10",
+  //     annotations: []
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "One-Pan Chicken & Rice",
+  //     image: "/content/template.jpg",
+  //     description: "Juicy chicken thighs baked with saffron rice and lemon.",
+  //     dateAdded: "2025-09-28",
+  //     annotations: [],
+  //   },
+  // ]);
   const { data: session } = useSession()
  
   console.log(session)
+  console.log(recipes)
 
   useEffect(() => {
     if (!session) { redirect('/') }
   }, [])
 
-  const [newAnnotation, setNewAnnotation] = useState<{ [key: number]: string }>({});
+  useEffect(() => {
+    setMounted(true);
+    getRecipes();
+  }, []);
+
+  async function getRecipes() {
+    const { data, error } = await supabase.from("recipes").select();
+
+     if (error) {
+        console.error("Error fetching products:", error);
+      } else {
+        setRecipes(data || []);
+      }
+  }
+
+  // const [newAnnotation, setNewAnnotation] = useState<{ [key: number]: string }>({});
 
   const handleAddAnnotation = (recipeId: number) => {
-    if (!newAnnotation[recipeId]) return;
-    setRecipes((prev) =>
-      prev.map((r) =>
-        r.id === recipeId
-          ? {
-              ...r,
-              annotations: [
-                ...r.annotations,
-                { id: Date.now(), text: newAnnotation[recipeId], author: "Guest" },
-              ],
-            }
-          : r
-      )
-    );
-    setNewAnnotation((prev) => ({ ...prev, [recipeId]: "" }));
+    // if (!newAnnotation[recipeId]) return;
+    // setRecipes((prev) =>
+    //   prev.map((r) =>
+    //     r.id === recipeId
+    //       ? {
+    //           ...r,
+    //           annotations: [
+    //             ...r.annotations,
+    //             { id: Date.now(), text: newAnnotation[recipeId], author: "Guest" },
+    //           ],
+    //         }
+    //       : r
+    //   )
+    // );
+    // setNewAnnotation((prev) => ({ ...prev, [recipeId]: "" }));
   };
+
+  if (!mounted) return null; // render nothing until client
 
   return (
     <div className="min-h-screen bg-neutral-50 py-12 px-6">
@@ -104,12 +128,12 @@ export default function Cookbook() {
                 <Image
                   src={recipe.image}
                   alt={recipe.title}
-                  width={400}
-                  height={250}
+                  width={300}
+                  height={150}
                   className="w-full h-56 object-cover"
                 />
                 <div className="absolute bottom-2 right-2 bg-white/80 text-sm px-2 py-1 rounded">
-                  Added: {new Date(recipe.dateAdded).toLocaleDateString()}
+                  Added: {new Date(recipe.created).toLocaleDateString()}
                 </div>
               </CardHeader>
               <CardContent className="p-5">
@@ -118,7 +142,7 @@ export default function Cookbook() {
 
                 <div className="space-y-3">
                   <h3 className="text-sm font-semibold text-gray-700">Annotations</h3>
-                  {recipe.annotations.length > 0 ? (
+                  {recipe.annotations && recipe.annotations.length > 0 ? (
                     <ul className="text-sm bg-gray-50 p-2 rounded-md border">
                       {recipe.annotations.map((a) => (
                         <li key={a.id} className="border-b last:border-none py-1">
@@ -131,7 +155,7 @@ export default function Cookbook() {
                   )}
                 </div>
               </CardContent>
-              <CardFooter className="flex flex-col space-y-2 p-5">
+              {/* <CardFooter className="flex flex-col space-y-2 p-5">
                 <Textarea
                   placeholder="Add your note..."
                   value={newAnnotation[recipe.id] || ""}
@@ -140,7 +164,7 @@ export default function Cookbook() {
                   }
                 />
                 <Button onClick={() => handleAddAnnotation(recipe.id)}>Add Annotation</Button>
-              </CardFooter>
+              </CardFooter> */}
             </Card>
           </motion.div>
         ))}
