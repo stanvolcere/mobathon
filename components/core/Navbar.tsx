@@ -23,8 +23,7 @@ export default function Navbar() {
   }, []);
 
   const { data: session } = useSession()
- 
-  console.log(session)
+
 
   const renderAuth = () => {
     if (session?.user) {
@@ -76,8 +75,8 @@ export default function Navbar() {
           <Link href="/" className="text-sm font-medium hover:text-primary">
             Discover
           </Link>
-          <Link href="/cookbook/me" className="text-sm font-medium hover:text-primary">
-            My Cookbook
+          <Link href="/cookbooks" className="text-sm font-medium hover:text-primary">
+            My Cookbooks
           </Link>
 
         {renderAuth()}
@@ -100,8 +99,8 @@ export default function Navbar() {
           <Link href="/" className="text-sm font-medium hover:text-primary">
             Discover
           </Link>
-          <Link href="/cookbook/me" className="text-sm font-medium hover:text-primary">
-            My Cookbook
+          <Link href="/cookbooks" className="text-sm font-medium hover:text-primary">
+            My Cookbooks
           </Link>
           
           {renderAuth()}

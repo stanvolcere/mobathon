@@ -1,0 +1,130 @@
+import type { Recipe } from "../types/recipe";
+
+export const mockRecipes: Recipe[] = [
+  {
+    id: "1",
+    title: "Crispy Cod with Spring Onion & Sesame Butter Sauce",
+    image: "https://files.mob-cdn.co.uk/recipes/2025/8/Crispy-Cod-with-Spring-Onion-Sesame-Butter-Sauce.jpg",
+    rating: 4.5,
+    reviewCount: 4439,
+    cookTime: "45 min",
+    servings: 4,
+    author: {
+      name: "Finn Tonry",
+    },
+    description: "Crispy, golden cod with a zingy garlic, ginger & spring onion butter. High-protein, full of flavour, and seriously satisfying.",
+    tags: ["Vegetarian", "Healthy", "Quick"],
+    ingredients: [
+      { id: "i1", name: "Beef/Bacon", amount: "1 lb", checked: false },
+      { id: "i2", name: "Chili peppers", amount: "2", checked: false },
+      { id: "i3", name: "Onions", amount: "1 large", checked: false },
+      { id: "i4", name: "Lettuce/Tomato", amount: "4 leaves", checked: false },
+      { id: "i5", name: "Pineapple", amount: "4 slices", checked: false },
+      { id: "i6", name: "Baby Spinach/Kale/Swiss Chard/Mustard Greens", amount: "2 cups", checked: false },
+      { id: "i7", name: "Strong Rosemary", amount: "2 tbsp fresh", checked: false },
+      { id: "i8", name: "Basil leaves", amount: "1/4 cup", checked: false },
+    ],
+    method: [
+      {
+        id: "m1",
+        step: 1,
+        title: "Prepare the vegetables",
+        description: "Finely chop the spinach, onions, and herbs. In a large bowl, mix all the vegetables together with breadcrumbs and seasonings.",
+      },
+      {
+        id: "m2",
+        step: 2,
+        title: "Form the patties",
+        description: "Divide the mixture into 4 equal portions and shape into burger patties. Press firmly to ensure they hold together during cooking.",
+      },
+      {
+        id: "m3",
+        step: 3,
+        title: "Cook the burgers",
+        description: "Heat oil in a large skillet over medium heat. Cook the patties for 4-5 minutes on each side until golden brown and cooked through.",
+      },
+      {
+        id: "m4",
+        step: 4,
+        title: "Make the goddess sauce",
+        description: "While burgers cook, blend tahini, lemon juice, garlic, and herbs until smooth. Add water to reach desired consistency.",
+      },
+      {
+        id: "m5",
+        step: 5,
+        title: "Assemble and serve",
+        description: "Toast the buns lightly. Place lettuce on the bottom bun, add the burger patty, drizzle with goddess sauce, and top with your favorite toppings.",
+      },
+    ],
+  },
+  {
+    id: "2",
+    title: "Spicy Egg Fried Rice",
+    image: "https://images.unsplash.com/photo-1646340916384-9845d7686e2e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmcmllZCUyMHJpY2UlMjBhc2lhbnxlbnwxfHx8fDE3NjA0OTYzNDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    rating: 4.7,
+    reviewCount: 3241,
+    cookTime: "25 min",
+    servings: 4,
+    author: {
+      name: "David Liu",
+    },
+    description: "Quick and flavorful fried rice with a spicy kick. Perfect for using up leftover rice!",
+    tags: ["Asian", "Quick", "Spicy"],
+    ingredients: [
+      { id: "i1", name: "Cooked rice (day-old)", amount: "4 cups", checked: false },
+      { id: "i2", name: "Eggs", amount: "3", checked: false },
+      { id: "i3", name: "Vegetables (peas, carrots)", amount: "2 cups", checked: false },
+      { id: "i4", name: "Soy sauce", amount: "3 tbsp", checked: false },
+      { id: "i5", name: "Sesame oil", amount: "1 tbsp", checked: false },
+    ],
+    method: [
+      {
+        id: "m1",
+        step: 1,
+        title: "Scramble the eggs",
+        description: "Beat eggs and scramble in a hot wok. Set aside.",
+      },
+      {
+        id: "m2",
+        step: 2,
+        title: "Fry the rice",
+        description: "Add rice to the wok and stir-fry until heated through and slightly crispy.",
+      },
+    ],
+  },
+  {
+    id: "3",
+    title: "Easy Korean Bibimbap Bowl",
+    image: "https://images.unsplash.com/photo-1584278858536-52532423b9ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrb3JlYW4lMjBiaWJpbWJhcCUyMGJvd2x8ZW58MXx8fHwxNzYwNTE2NDU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    rating: 4.6,
+    reviewCount: 2156,
+    cookTime: "35 min",
+    servings: 2,
+    author: {
+      name: "Sarah Kim",
+    },
+    description: "A colorful Korean rice bowl with seasoned vegetables, protein, and a fried egg on top.",
+    tags: ["Korean", "Healthy", "Colorful"],
+    ingredients: [
+      { id: "i1", name: "Short grain rice", amount: "2 cups", checked: false },
+      { id: "i2", name: "Spinach", amount: "2 cups", checked: false },
+      { id: "i3", name: "Bean sprouts", amount: "1 cup", checked: false },
+      { id: "i4", name: "Carrots", amount: "1 large", checked: false },
+      { id: "i5", name: "Gochujang", amount: "2 tbsp", checked: false },
+    ],
+    method: [
+      {
+        id: "m1",
+        step: 1,
+        title: "Prepare vegetables",
+        description: "Blanch and season each vegetable separately with sesame oil and salt.",
+      },
+      {
+        id: "m2",
+        step: 2,
+        title: "Assemble bowl",
+        description: "Place rice in bowl, arrange vegetables on top, add protein and fried egg.",
+      },
+    ],
+  },
+];

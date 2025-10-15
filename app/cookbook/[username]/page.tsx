@@ -13,6 +13,7 @@ import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
 import { useSession } from "next-auth/react"
 import { redirect } from "next/navigation";
+import { Link } from "lucide-react";
 
 type Recipe = {
   id: number;
@@ -29,15 +30,16 @@ export default function Cookbook() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [mounted, setMounted] = useState(false);
   
-  // ([
-  //   {
-  //     id: 1,
-  //     title: "Creamy Garlic Pasta",
-  //     image: "/content/template.jpg",
-  //     description: "A 15-minute creamy pasta with garlic, parsley and parmesan.",
-  //     dateAdded: "2025-10-10",
-  //     annotations: []
-  //   },
+  const mockRecipes = [
+    {
+      id: 1,
+      title: "Crispy Cod with Spring Onion & Sesame Butter Sauce",
+      image: "https://files.mob-cdn.co.uk/recipes/2025/8/Crispy-Cod-with-Spring-Onion-Sesame-Butter-Sauce.jpg",
+      description: "Crispy, golden cod with a zingy garlic, ginger & spring onion butter. High-protein, full of flavour, and seriously satisfying.",
+      created: "2025-10-10",
+      annotations: []
+    },
+  ]
   //   {
   //     id: 2,
   //     title: "Creamy Garlic Pasta",
@@ -64,9 +66,7 @@ export default function Cookbook() {
   //   },
   // ]);
   const { data: session } = useSession()
- 
-  console.log(session)
-  console.log(recipes)
+
 
   useEffect(() => {
     if (!session) { redirect('/') }
@@ -74,7 +74,8 @@ export default function Cookbook() {
 
   useEffect(() => {
     setMounted(true);
-    getRecipes();
+    // getRecipes(mockRecipes);
+    setRecipes(mockRecipes);
   }, []);
 
   async function getRecipes() {
@@ -124,18 +125,18 @@ export default function Cookbook() {
             transition={{ delay: idx * 0.1 }}
           >
             <Card className="overflow-hidden shadow-md hover:shadow-lg transition rounded-2xl">
-              <CardHeader className="p-0 relative">
-                <Image
-                  src={recipe.image}
-                  alt={recipe.title}
-                  width={300}
-                  height={150}
-                  className="w-full h-56 object-cover"
-                />
-                <div className="absolute bottom-2 right-2 bg-white/80 text-sm px-2 py-1 rounded">
-                  Added: {new Date(recipe.created).toLocaleDateString()}
-                </div>
-              </CardHeader>
+                <CardHeader className="p-0 relative">
+                  <Image
+                    src={recipe.image}
+                    alt={recipe.title}
+                    width={300}
+                    height={150}
+                    className="w-full h-56 object-cover"
+                  />
+                  <div className="absolute bottom-2 right-2 bg-white/80 text-sm px-2 py-1 rounded">
+                    Added: {new Date(recipe.created).toLocaleDateString()}
+                  </div>
+                </CardHeader>
               <CardContent className="p-5">
                 <h2 className="text-xl font-semibold mb-2">{recipe.title}</h2>
                 <p className="text-sm text-gray-600 mb-4">{recipe.description}</p>
@@ -154,6 +155,7 @@ export default function Cookbook() {
                     <p className="text-sm text-gray-500 italic">No annotations yet.</p>
                   )}
                 </div>
+                <a href={`/recipes/${recipe.id}`}>View Cookbook</a>
               </CardContent>
               {/* <CardFooter className="flex flex-col space-y-2 p-5">
                 <Textarea

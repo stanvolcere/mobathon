@@ -1,0 +1,31 @@
+.recipe-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.recipe-header img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.recipe-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.recipe-header p {
+  margin-bottom: 0.5rem;
+}
+
+.recipe-ingredients,
+.recipe-instructions {
+  margin-top: 2rem;
+}
+
+.recipe-ingredients ul,
+.recipe-instructions ol {
+  margin-left: 1.5rem;
+}
